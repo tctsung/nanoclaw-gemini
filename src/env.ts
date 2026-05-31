@@ -1,4 +1,5 @@
 import fs from 'fs';
+import os from 'os';
 import path from 'path';
 import { log } from './log.js';
 
@@ -9,12 +10,19 @@ import { log } from './log.js';
  * so they don't leak to child processes.
  */
 export function readEnvFile(keys: string[]): Record<string, string> {
-  const envFile = path.join(process.cwd(), '.env');
+  return readEnvFileAt(path.join(process.cwd(), '.env'), keys);
+}
+
+export function readUserEnvFile(keys: string[]): Record<string, string> {
+  return readEnvFileAt(path.join(process.env.HOME || os.homedir(), '.env'), keys);
+}
+
+function readEnvFileAt(envFile: string, keys: string[]): Record<string, string> {
   let content: string;
   try {
     content = fs.readFileSync(envFile, 'utf-8');
   } catch (err) {
-    log.debug('.env file not found, using defaults', { err });
+    log.debug(`${envFile} not found, using defaults`, { err });
     return {};
   }
 
@@ -26,7 +34,10 @@ export function readEnvFile(keys: string[]): Record<string, string> {
     if (!trimmed || trimmed.startsWith('#')) continue;
     const eqIdx = trimmed.indexOf('=');
     if (eqIdx === -1) continue;
-    const key = trimmed.slice(0, eqIdx).trim();
+    const key = trimmed
+      .slice(0, eqIdx)
+      .trim()
+      .replace(/^export\s+/, '');
     if (!wanted.has(key)) continue;
     let value = trimmed.slice(eqIdx + 1).trim();
     if (
