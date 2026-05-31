@@ -1,37 +1,27 @@
-# NanoClaw (Gemini + OpenCode)
+# NanoClaw (Deron's Personal Agent)
 
-> No Claude Code. No credit card. One API key and one command.
+* **Motivation:**
 
-A fork of [nanocoai/nanoclaw](https://github.com/nanocoai/nanoclaw) for people who don't have (or don't want to pay for) an Anthropic API key, bypassing the original setup's reliance on Claude Code
+A fork of [nanocoai/nanoclaw](https://github.com/nanocoai/nanoclaw) for people who don't have (or don't want to pay for) an Anthropic API key, bypassing the original setup's reliance on Claude Code.
+
+> **⚠️ Looking for a clean template?** Go to the README.md file on [`gemini-opencode` branch](https://github.com/tctsung/nanoclaw-gemini/tree/gemini-opencode). The main branch is my personal environment and tracks my agent's custom configurations.
+
 
 Pre-installed skills in this branch
 
 - **OpenCode provider** — **Google Gemini** as the LLM backend (free tier: 1500 req/day)
 - **Telegram channel** — message your agent from your phone (or choose other channels through `bash nanoclaw.sh`)
 
-## Quick Start
+List of Agents
 
-1. **Clone this branch:**
-```bash
-git clone -b gemini-opencode https://github.com/tctsung/nanoclaw.git nanoclaw-v2
-cd nanoclaw-v2
-```
+- OhPi (歐皮): 
+  
+  - **purpose**: main interface for scheduled jobs, personal chat
+  - **model**: google/gemini-3.5-flash (main) & google/gemini-3.1-flash-lite (fallback)
 
-2. **Set up your API key:**
-```bash
-cp .env.example .env
-nano .env
-```
 
-3. **Run the installation script:**
 
-> **⚠️ IMPORTANT:** When the script asks *"How would you like to connect to Claude?"* — **select Skip**. We are using Gemini + OpenCode instead.
-```bash
-bash nanoclaw.sh
-```
 
----
-*Note: This branch is maintained as a clean template. Create a separate personal branch to store your own configuration and agent memories.*
 
 ## License
 
